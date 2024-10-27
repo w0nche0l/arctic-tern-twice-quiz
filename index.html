@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arctic Tern Quiz: Which TWICE Member Are You?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #4682b4;
+            text-align: center;
+        }
+        #quiz-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #36648b;
+        }
+        #result, #quiz-summary {
+            margin-top: 20px;
+            text-align: left;
+        }
+        #quiz-summary {
+            white-space: pre-wrap;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arctic Tern Quiz: Which TWICE Member Are You?</h1>
+    <div id="quiz-container">
+        <div id="question-container"></div>
+        <div id="result"></div>
+        <div id="quiz-summary"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "You wake up at dawn. What's your first thought?",
+                choices: [
+                    { text: "Time to catch some fish!", members: ["Nayeon", "Jeongyeon"] },
+                    { text: "I wonder how far I'll fly today.", members: ["Momo", "Sana"] },
+                    { text: "Where are my flock mates?", members: ["Jihyo", "Mina"] },
+                    { text: "I hope I don't run into any predators.", members: ["Dahyun", "Chaeyoung"] },
+                    { text: "Let's explore a new area!", members: ["Sana", "Tzuyu"] },
+                    { text: "I need to preen my feathers.", members: ["Mina", "Tzuyu"] }
+                ]
+            },
+            {
+                question: "You spot a school of fish. What's your approach?",
+                choices: [
+                    { text: "Dive straight in, no hesitation.", members: ["Nayeon", "Momo"] },
+                    { text: "Observe first, then make a calculated move.", members: ["Mina", "Tzuyu"] },
+                    { text: "Call my friends over to share.", members: ["Sana", "Dahyun"] },
+                    { text: "Wait for a bigger fish.", members: ["Jeongyeon", "Chaeyoung"] },
+                    { text: "Try a new diving technique.", members: ["Momo", "Chaeyoung"] },
+                    { text: "Go for the easiest catch.", members: ["Jihyo", "Dahyun"] }
+                ]
+            },
+            {
+                question: "A storm is brewing. What do you do?",
+                choices: [
+                    { text: "Fly above the clouds.", members: ["Nayeon", "Sana"] },
+                    { text: "Find shelter on the nearest iceberg.", members: ["Mina", "Tzuyu"] },
+                    { text: "Use the wind to travel faster.", members: ["Momo", "Chaeyoung"] },
+                    { text: "Turn back and wait it out.", members: ["Jihyo", "Dahyun"] },
+                    { text: "Navigate through it carefully.", members: ["Jeongyeon", "Mina"] },
+                    { text: "Join other birds and fly together.", members: ["Sana", "Dahyun"] }
+                ]
+            },
+            {
+                question: "You encounter a pod of whales. Your reaction?",
+                choices: [
+                    { text: "Follow them for a while.", members: ["Nayeon", "Sana"] },
+                    { text: "Keep my distance, just in case.", members: ["Mina", "Tzuyu"] },
+                    { text: "Try to communicate with them.", members: ["Dahyun", "Chaeyoung"] },
+                    { text: "Look for fish they might scare to the surface.", members: ["Jeongyeon", "Momo"] },
+                    { text: "Admire their grace from afar.", members: ["Jihyo", "Tzuyu"] },
+                    { text: "Circle around them playfully.", members: ["Sana", "Chaeyoung"] }
+                ]
+            },
+            {
+                question: "It's time for a rest. Where do you stop?",
+                choices: [
+                    { text: "A busy seabird colony.", members: ["Nayeon", "Sana"] },
+                    { text: "A solitary rock in the ocean.", members: ["Mina", "Tzuyu"] },
+                    { text: "The edge of an ice floe.", members: ["Jeongyeon", "Chaeyoung"] },
+                    { text: "A sandy beach.", members: ["Jihyo", "Dahyun"] },
+                    { text: "I don't stop, I keep flying.", members: ["Momo", "Nayeon"] },
+                    { text: "Wherever I find myself when tired.", members: ["Dahyun", "Tzuyu"] }
+                ]
+            },
+            {
+                question: "You spot an unfamiliar coastline. What's your move?",
+                choices: [
+                    { text: "Investigate it closely.", members: ["Chaeyoung", "Tzuyu"] },
+                    { text: "Mark it in my mental map for later.", members: ["Mina", "Jeongyeon"] },
+                    { text: "Look for other terns to ask about it.", members: ["Sana", "Dahyun"] },
+                    { text: "Stick to my planned route.", members: ["Jihyo", "Mina"] },
+                    { text: "Land and explore on foot.", members: ["Nayeon", "Chaeyoung"] },
+                    { text: "Fly along it to see where it leads.", members: ["Momo", "Sana"] }
+                ]
+            },
+            {
+                question: "The midnight sun is out. How do you feel?",
+                choices: [
+                    { text: "Energized and ready for more adventures.", members: ["Nayeon", "Momo"] },
+                    { text: "Confused about my sleep schedule.", members: ["Dahyun", "Chaeyoung"] },
+                    { text: "Grateful for the extended feeding time.", members: ["Jihyo", "Jeongyeon"] },
+                    { text: "Wanting to share the beautiful view.", members: ["Sana", "Tzuyu"] },
+                    { text: "Contemplative about the wonders of nature.", members: ["Mina", "Tzuyu"] },
+                    { text: "Excited to see nighttime marine life.", members: ["Chaeyoung", "Momo"] }
+                ]
+            },
+            {
+                question: "You find a perfect nesting spot. What's important?",
+                choices: [
+                    { text: "Close to good fishing grounds.", members: ["Jeongyeon", "Momo"] },
+                    { text: "Hidden from predators.", members: ["Mina", "Tzuyu"] },
+                    { text: "Near other tern nests.", members: ["Sana", "Dahyun"] },
+                    { text: "With a great view of the surroundings.", members: ["Nayeon", "Chaeyoung"] },
+                    { text: "Comfortable and cozy.", members: ["Jihyo", "Mina"] },
+                    { text: "Easily defensible.", members: ["Jeongyeon", "Jihyo"] }
+                ]
+            },
+            {
+                question: "A seagull tries to steal your fish. Your response?",
+                choices: [
+                    { text: "Aggressively defend my catch.", members: ["Nayeon", "Jihyo"] },
+                    { text: "Outsmart it with aerial maneuvers.", members: ["Momo", "Chaeyoung"] },
+                    { text: "Share a little bit to avoid conflict.", members: ["Sana", "Dahyun"] },
+                    { text: "Find a different fishing spot.", members: ["Mina", "Tzuyu"] },
+                    { text: "Work with other terns to drive it away.", members: ["Jihyo", "Jeongyeon"] },
+                    { text: "Use distraction techniques to protect my fish.", members: ["Dahyun", "Chaeyoung"] }
+                ]
+            },
+            {
+                question: "As the day ends, what's on your mind?",
+                choices: [
+                    { text: "Planning tomorrow's journey.", members: ["Jihyo", "Jeongyeon"] },
+                    { text: "Reflecting on the distances I've traveled.", members: ["Mina", "Tzuyu"] },
+                    { text: "Looking forward to rejoining my flock.", members: ["Sana", "Dahyun"] },
+                    { text: "Hoping for good weather tomorrow.", members: ["Chaeyoung", "Momo"] },
+                    { text: "Excited about new places I've discovered.", members: ["Nayeon", "Sana"] },
+                    { text: "Satisfied with today's achievements.", members: ["Jihyo", "Mina"] }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let memberScores = {
+            Nayeon: 0, Jeongyeon: 0, Momo: 0, Sana: 0, Jihyo: 0,
+            Mina: 0, Dahyun: 0, Chaeyoung: 0, Tzuyu: 0
+        };
+        let quizSummary = [];
+
+        function displayQuestion() {
+            const questionContainer = document.getElementById('question-container');
+            const question = questions[currentQuestion];
+
+            let html = `<div class="question">
+                <h2>${question.question}</h2>
+                <div class="choices">`;
+
+            question.choices.forEach((choice, index) => {
+                html += `<button onclick="selectChoice(${index})">${choice.text}</button>`;
+            });
+
+            html += `</div></div>`;
+
+            questionContainer.innerHTML = html;
+        }
+
+        function selectChoice(choiceIndex) {
+            const question = questions[currentQuestion];
+            const selectedChoice = question.choices[choiceIndex];
+
+            // Update scores
+            selectedChoice.members.forEach(member => memberScores[member]++);
+
+            // Add to quiz summary
+            quizSummary.push(`Q: ${question.question}\nA: ${selectedChoice.text}\n`);
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                displayQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const resultContainer = document.getElementById('result');
+            const summaryContainer = document.getElementById('quiz-summary');
+            
+            let maxScore = 0;
+            let topMember = '';
+            for (let member in memberScores) {
+                if (memberScores[member] > maxScore) {
+                    maxScore = memberScores[member];
+                    topMember = member;
+                }
+            }
+
+            resultContainer.innerHTML = `<h2>Your Result</h2>
+                <p>You are most like ${topMember}!</p>
+                <h3>All Member Scores:</h3>
+                <ul>${Object.entries(memberScores).map(([member, score]) => `<li>${member}: ${score}</li>`).join('')}</ul>`;
+
+            summaryContainer.innerHTML = `<h3>Quiz Summary:</h3><pre>${quizSummary.join('\n')}</pre>`;
+            
+            document.getElementById('question-container').style.display = 'none';
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
